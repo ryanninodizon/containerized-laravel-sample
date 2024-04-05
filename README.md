@@ -6,7 +6,7 @@
 - docker-compose stop
 - docker-compose up
 
-# Lavarel specific commands
+# Laravel specific commands
 - docker exec laravel-docker bash -c "composer create-project laravel/laravel ."
 - docker exec laravel-docker bash -c "composer update"
 - docker exec laravel-docker bash -c "php artisan migrate"
