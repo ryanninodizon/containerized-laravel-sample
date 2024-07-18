@@ -1,0 +1,10 @@
+az group create --name rg-my-laravel-app --location "germanywestcentral"
+az acr create --resource-group rg-my-laravel-app --name $ACR_NAME --sku Basic --admin-enabled true
+
+docker build --tag mylaravelapp.azurecr.io/mylaravelapp .
+az acr login --name "mylaravelapp"
+docker push mylaravelapp.azurecr.io/mylaravelapp
+
+az containerapp env create --name cae-mylaravelapp --resource-group rg-my-laravel-app --location "germanywestcentral"
+
+az containerapp create --name mylaravelapp --resource-group rg-my-laravel-app --environment cae-mylaravelapp --image mylaravelapp.azurecr.io/mylaravelapp --target-port 80 --ingress external --registry-server mylaravelapp.azurecr.io --query properties.configuration.ingress.fqdn
